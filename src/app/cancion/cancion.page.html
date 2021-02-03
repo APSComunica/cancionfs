@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="t1">Ver Canciones</ion-title>
+    <ion-buttons slot="start">   
+      <ion-back-button class="bback1" defaultHref="/home" icon="arrow-back-circle-outline"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <strong> ID de la cancion es:</strong> {{ id }}
+
+  <ion-item>
+    <ion-label><strong>Titulo:</strong></ion-label>
+    <ion-input [(ngModel)]="document.data.titulo"></ion-input>
+  </ion-item>
+  
+  
+  <ion-item>
+    <ion-label>Autor</ion-label>
+    <ion-input [(ngModel)]="document.data.autor"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Duracion</ion-label>
+    <ion-input [(ngModel)]="document.data.duracion"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Imagen</ion-label>
+    <ion-input [(ngModel)]="document.data.imagen"></ion-input>
+  </ion-item>
+
+  <div *ngIf=" id == 'nuevo'">
+    <ion-button (click)="clicBotonInsertar()">Insertar Cancion</ion-button>
+  </div>
+  <div *ngIf=" id != 'nuevo'">
+    <button ion-button class="next" (click)="previousButtonClick">
+      <ion-button (click)="clicBotonBorrar()">Borrar Cancion</ion-button>
+      <ion-button (click)="clicBotonModificar()">Modificar Cancion</ion-button>
+   </button>
+  </div>
+
+
+</ion-content>

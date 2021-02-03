@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="titulo">
+      <strong>
+        Canciones Home
+      </strong>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Añadimos los campos que vamos a usar -->
+  <ion-item>
+    <ion-label>Título</ion-label>
+    <ion-input [(ngModel)]="cancionEditando.titulo"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Autor</ion-label>
+    <ion-input [(ngModel)]="cancionEditando.autor"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Duracion</ion-label>
+    <ion-input [(ngModel)]="cancionEditando.duracion"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Imagen</ion-label>
+    <ion-input [(ngModel)]="cancionEditando.imagen"></ion-input>
+  </ion-item>
+  <!-- Añadimos boton de añadir -->
+  <ion-button (click)="clicBotonInsertar()">Añadir cancion</ion-button>
+
+  <!-- Añadimos para que podamos ver las canciones -->
+  <h1>LISTA DE CANCIONES</h1>
+  <ion-list>
+    <!-- Le ponemos para que al hacer click se seleccione la cancion -->
+    <ion-item *ngFor="let documentCancion of arrayColeccionCanciones" (click)="selecCancion(documentCancion)">
+      <ion-grid>
+        <ion-row>
+          <h2>{{documentCancion.data.titulo}}</h2>
+        </ion-row>
+        <ion-row>
+          <p>{{documentCancion.data.autor}}</p>
+        </ion-row>
+        <ion-row>
+          <p>{{documentCancion.data.duracion}}</p>
+        </ion-row>
+        <ion-row>
+          <p>{{documentCancion.data.imagen}}</p>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <!-- Añadimos un boton de clase ion-fab-button -->
+  <!-- Le ponemos que al hacer click ejecute la funcion navigateToCancion, que nos envía a la segunda página -->
+  <!-- Le pomnemos un icono de la libreria cd icons google -->
+  <ion-fab-button (click)="navigateToCancion()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-music-fill" viewBox="0 0 16 16">
+      <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 6.64v1.75l-2 .5v3.61c0 .495-.301.883-.662 1.123C7.974 13.866 7.499 14 7 14c-.5 0-.974-.134-1.338-.377-.36-.24-.662-.628-.662-1.123s.301-.883.662-1.123C6.026 11.134 6.501 11 7 11c.356 0 .7.068 1 .196V6.89a1 1 0 0 1 .757-.97l1-.25A1 1 0 0 1 11 6.64z"/>
+      </svg>
+  </ion-fab-button>
+
+</ion-content>
+
+<!-- Añadimos un footer para que pueda accedder a otras páginas -->
+<ion-footer>
+  <ion-button (click)="navigateToInformacion()"><ion-icon name="book"></ion-icon></ion-button>
+  <ion-button (click)="navigateToConstruir()"><ion-icon name="construct"></ion-icon></ion-button>
+</ion-footer>
