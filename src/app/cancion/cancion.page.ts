@@ -6,6 +6,8 @@ import { FirestoreService } from '../firestore.service';
 
 import { Router } from "@angular/router";
 
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-cancion',
   templateUrl: './cancion.page.html',
@@ -20,7 +22,7 @@ export class CancionPage implements OnInit {
     data: {} as Cancion
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router) { 
+  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, public alertCtrl: AlertController) { 
 
   }
 
@@ -46,15 +48,7 @@ export class CancionPage implements OnInit {
   } 
 
 
-  clicBotonBorrar() {
-    //Borramos el bolso
-    this.firestoreService.borrar("canciones", this.id).then(() => {
-      // Limpiar datos de pantalla
-      this.document.data = {} as Cancion;
-      //Cuando eliminemos el artículo volvemos a home
-      this.router.navigate(["/home"]); 
-    })
-  }
+  
 
   clicBotonModificar() {
     //Modificamos la cancion seleccionado
@@ -76,6 +70,47 @@ export class CancionPage implements OnInit {
     //Cuando creemos el artículo volvemos a home
     this.router.navigate(["/home"]); 
   }
+
+
+
+  clicBotonBorrar() {
+    //Borramos el bolso
+    this.firestoreService.borrar("canciones", this.id).then(() => {
+      // Limpiar datos de pantalla
+      this.document.data = {} as Cancion;
+      //Cuando eliminemos el artículo volvemos a home
+      this.router.navigate(["/home"]); 
+    })
+  }
+
+  async showConfirm() {  
+    const confirm = await this.alertCtrl.create({  
+      header: 'Confirm!',  
+      message: 'Do you agree to use this Alert option',  
+      buttons: [  
+        {  
+          text: 'Cancel',  
+          role: 'cancel',  
+          handler: () => {  
+            console.log('Confirm Cancel');  
+          }  
+        },  
+        {  
+          text: 'Okay',  
+          handler: () => {  
+            this.firestoreService.borrar("canciones", this.id).then(() => {
+              // Limpiar datos de pantalla
+              this.document.data = {} as Cancion;
+              //Cuando eliminemos el artículo volvemos a home
+              this.router.navigate(["/home"]); 
+            })
+            console.log('Confirm Okay.');  
+          }  
+        }  
+      ]  
+    });  
+    await confirm.present();  
+  }  
  
 
 }

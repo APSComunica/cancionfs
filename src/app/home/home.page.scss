@@ -25,3 +25,11 @@
 #container a {
   text-decoration: none;
 }
+
+//Asigno una clase a los botones para cambiarle el color al ponerlo en horizontal
+.clasebotons{
+  --background: blue;
+  @media only screen and (orientation: landscape) {
+    --background: yellow;
+  }
+}
