@@ -42,7 +42,7 @@ export class FirestoreService {
   }
 
   public deleteFileFromURL(fileURL) {
-    return this.angularFireStorage.refFromURL(fileURL).delete();
+    return this.angularFireStorage.storage.refFromURL(fileURL).delete();
   }
 
 }

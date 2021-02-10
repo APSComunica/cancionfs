@@ -177,7 +177,7 @@ export class CancionPage implements OnInit {
 
     async deleteFile(fileURL) {  
       const toast = await this.ToastController.create({   
-        message: 'Do you agree to use this Alert option',  
+        message: 'Imagen borrada con éxito',  
        duration: 3000
       });
       this.firestoreService.deleteFileFromURL(fileURL)
