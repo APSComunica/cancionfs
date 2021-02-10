@@ -1,5 +1,7 @@
 {
   "name": "cancionFS",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
