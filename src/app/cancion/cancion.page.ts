@@ -8,6 +8,9 @@ import { Router } from "@angular/router";
 
 import { AlertController } from '@ionic/angular';
 
+import { LoadingController, ToastController } from '@ionic/angular';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
 @Component({
   selector: 'app-cancion',
   templateUrl: './cancion.page.html',
@@ -22,9 +25,10 @@ export class CancionPage implements OnInit {
     data: {} as Cancion
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, public alertCtrl: AlertController) { 
-
-  }
+  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, public alertCtrl: AlertController,
+    private LoadingController: LoadingController,
+    private ToastController: ToastController,
+    private ImagePicker: ImagePicker) {}
 
   ngOnInit() {
     //Recoge el id y el tipo de acción que realizamos
@@ -112,5 +116,76 @@ export class CancionPage implements OnInit {
     await confirm.present();  
   }  
  
+
+
+  async uploadImagePicker() {
+    const loading = await this.LoadingController.create({  
+      message: 'Por favor espere...'   
+    });  
+      
+    const toast = await this.ToastController.create({  
+      message: 'Imagen subida con exito',
+      duration:3000   
+    });
+
+    this.ImagePicker.hasReadPermission().then(
+      (result) => {
+
+        if(result == false){
+          this.ImagePicker.requestReadPermission();
+        }
+        else{
+
+          this.ImagePicker.getPictures({
+            maximumImagesCount: 1,
+            outputType: 1
+          }).then (
+            (results) => {
+
+              let nombreCarpeta = "imagenes";
+
+              for (var i = 0; i > results.length; i++) {
+
+                loading.present();
+
+                let nombreImagen = `${new Date().getTime()}`;
+
+                this.firestoreService.uploadImage(nombreCarpeta, nombreImagen, results[i])
+                .then(snapshot => {
+                  snapshot.ref.getDownloadURL()
+                  .then(downloadURL => {
+
+                    console.log("downloadURL:" + downloadURL);
+
+                    toast.present();
+
+                    loading.dismiss();
+                  })
+                })
+              }
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+        }
+      }, (err) => {
+        console.log(err);
+      });
+    } 
+
+
+    async deleteFile(fileURL) {  
+      const toast = await this.ToastController.create({   
+        message: 'Do you agree to use this Alert option',  
+       duration: 3000
+      });
+      this.firestoreService.deleteFileFromURL(fileURL)
+      .then(() => {
+        toast.present();
+      }, (err) => {
+        console.log(err);
+      });
+    }
 
 }
