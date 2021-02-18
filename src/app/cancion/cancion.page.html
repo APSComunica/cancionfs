@@ -28,7 +28,7 @@
 
   <ion-item>
     <ion-label>Imagen</ion-label>
-    <ion-input [(ngModel)]="document.data.imagen"></ion-input>
+    <ion-img [(src)]="document.data.imagen"></ion-img>
   </ion-item>
 
   <div *ngIf=" id == 'nuevo'">
