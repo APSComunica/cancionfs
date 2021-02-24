@@ -145,6 +145,7 @@ export class CancionPage implements OnInit {
           }).then (
             (results) => { //En la variable results se tienen las imagenes seleccionadas
               //Carpeta del Storage donde se almacenará la imagen
+              console.log("Hola, esta entrando");
               let imagenes = "imagenes";
               //Recorrer todas las imagenes que haya seleccionado el usuario
               //aunque realmente solo será 1 como se ha indicado en las opciones
