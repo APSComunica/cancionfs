@@ -119,66 +119,74 @@ export class CancionPage implements OnInit {
 
 
   async uploadImagePicker() {
-    const loading = await this.LoadingController.create({  
-      message: 'Por favor espere...'   
-    });  
+    const loading = await this.LoadingController.create({
+      message: 'Please wait...'
+    });
       
-    const toast = await this.ToastController.create({  
-      message: 'Imagen subida con exito',
-      duration:3000   
+    //Mensaje de finalización de subida de la imagen 
+    const toast = await this.ToastController.create({
+      message:'Image was update successfully',
+      duration: 3000
     });
 
+    //Comprobar si la aplicación tiene permisos de lectura
     this.ImagePicker.hasReadPermission().then(
       (result) => {
 
-        if(result == false){
+        //Si no tiene permiso de lectura se solicita al usuario
+        if(result ==false){
           this.ImagePicker.requestReadPermission();
         }
         else{
-
+          //Abrir selector de imágenes (IMagePicker)
           this.ImagePicker.getPictures({
-            maximumImagesCount: 1,
-            outputType: 1
+            maximumImagesCount: 1, //Permitir sólo 1 imagen
+            outputType: 1 //1=Base64
           }).then (
-            (results) => {
-
-              let nombreCarpeta = "imagenes";
-
-              for (var i = 0; i > results.length; i++) {
-
+            (results) => { //En la variable results se tienen las imagenes seleccionadas
+              //Carpeta del Storage donde se almacenará la imagen
+              let imagenes = "imagenes";
+              //Recorrer todas las imagenes que haya seleccionado el usuario
+              //aunque realmente solo será 1 como se ha indicado en las opciones
+              for (var i=0; i<results.length; i++) {
+                //mostrar el mensaje de espera
                 loading.present();
-
-                let nombreImagen = `${new Date().getTime()}`;
-
-                this.firestoreService.uploadImage(nombreCarpeta, nombreImagen, results[i])
+                //Asignar el nombre de la imagen en función de la hora actual para 
+                //evitar duplicados de nombres
+                let imagen = `${new Date().getTime()}`;
+                //Llamar al método que se sube la imagen al Storage
+                this.firestoreService.uploadImage(imagenes,imagen,results[i])
                 .then(snapshot => {
                   snapshot.ref.getDownloadURL()
                   .then(downloadURL => {
-
-                    console.log("downloadURL:" + downloadURL);
-
+                    console.log("downloadURL:"+downloadURL);
+                    if(this.document.data.imagen!= null){
+                      this.deleteFile(this.document.data.imagen);
+                    }
+                    //Aquí guardamos la url en el campo que nos interesa
+                    this.document.data.imagen = downloadURL;
                     toast.present();
-
                     loading.dismiss();
                   })
                 })
               }
             },
             (err) => {
-              console.log(err);
+              console.log(err)
             }
           );
         }
       }, (err) => {
         console.log(err);
       });
-    } 
+    
+  }
 
 
-    async deleteFile(fileURL) {  
-      const toast = await this.ToastController.create({   
-        message: 'Imagen borrada con éxito',  
-       duration: 3000
+    async deleteFile(fileURL){
+      const toast = await this.ToastController.create({
+        message: 'File was deleted seccessfully',
+        duration: 3000
       });
       this.firestoreService.deleteFileFromURL(fileURL)
       .then(() => {

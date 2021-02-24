@@ -27,8 +27,8 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Imagen</ion-label>
-    <ion-img [(src)]="document.data.imagen"></ion-img>
+    <ion-button color="primary" type="File" (click)="uploadImagePicker()">Examinar</ion-button>
+    <ion-img [src]=" document.data.imagen" style="height: auto; max-width: 23vh;"></ion-img>   
   </ion-item>
 
   <div *ngIf=" id == 'nuevo'">
