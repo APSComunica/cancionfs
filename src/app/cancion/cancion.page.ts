@@ -13,7 +13,6 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
-
 @Component({
   selector: 'app-cancion',
   templateUrl: './cancion.page.html',
@@ -21,6 +20,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 })
 export class CancionPage implements OnInit {
   id = null;
+  quotes :any;
 
 //ultimo
   document: any = {
@@ -32,7 +32,7 @@ export class CancionPage implements OnInit {
     private LoadingController: LoadingController,
     private ToastController: ToastController,
     private ImagePicker: ImagePicker,
-    private socialSharing: SocialSharing) {}
+    private socialSharing: SocialSharing,) {}
 
   ngOnInit() {
     //Recoge el id y el tipo de acción que realizamos
@@ -204,12 +204,22 @@ export class CancionPage implements OnInit {
     }
 
 
-    regularSharing() {
+    regularShare() {
       this.socialSharing.share("Mi mensaje que comparto", null, null, null).then(() => {
-        console.log("Se ha compartido correctamente");
-      }).catch((error) => {
-        console.log("Se ha producido un error: " + error);
       });
     }
+
+    whatsappShare(){
+       this.socialSharing.shareViaWhatsApp(null, null);
+     }
+
+     twitterShare(){
+      this.socialSharing.shareViaTwitter(null, null);
+    }
+    
+    facebookShare(){
+       this.socialSharing.shareViaFacebook(null, null);
+     }
+
 
 }

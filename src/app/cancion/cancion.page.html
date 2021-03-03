@@ -42,7 +42,21 @@
   </div>
 
   <div id="container">
-    <ion-button (click)="regularSharing()">Compartir</ion-button>
+    <button ion-button icon-only (click)="regularShare(i)" color="primary" clear>
+      <ion-icon class="share-icon" name="share"></ion-icon>
+    </button>
+    <!-- Boton1 -->
+    <button ion-button icon-only (click)="whatsappShare(i)" color="primary" clear>
+      <ion-icon class="share-icon" name="logo-whatsapp"></ion-icon>
+    </button>
+    <!-- Boton2 -->
+    <button ion-button icon-only (click)="facebookShare(i)" color="primary" clear>
+      <ion-icon  class="share-icon" name="logo-facebook"></ion-icon>
+    </button>
+    <!-- Boton3 -->
+    <button ion-button icon-only (click)="twitterShare(i)" color="primary" clear>
+      <ion-icon class="share-icon" name="logo-twitter"></ion-icon>
+    </button>
   </div>
 
 </ion-content>
