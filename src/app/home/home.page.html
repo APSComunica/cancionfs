@@ -45,8 +45,7 @@
           <p>{{documentCancion.data.duracion}}</p>
         </ion-row>
         <ion-row>
-          <h2 style="color:blue">{{documentCancion.data.imagen}}</h2>
-          <ion-img style="height: auto; max-width: 23vh;">{{documentCancion.data.imagen}}</ion-img>   
+          <ion-img [src]="documentCancion.data.imagen" style="height: auto; max-width: 23vh;"></ion-img> 
         </ion-row>
       </ion-grid>
     </ion-item>
