@@ -11,6 +11,9 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+
 @Component({
   selector: 'app-cancion',
   templateUrl: './cancion.page.html',
@@ -28,7 +31,8 @@ export class CancionPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, public alertCtrl: AlertController,
     private LoadingController: LoadingController,
     private ToastController: ToastController,
-    private ImagePicker: ImagePicker) {}
+    private ImagePicker: ImagePicker,
+    private socialSharing: SocialSharing) {}
 
   ngOnInit() {
     //Recoge el id y el tipo de acción que realizamos
@@ -196,6 +200,15 @@ export class CancionPage implements OnInit {
         toast.present();
       }, (err) => {
         console.log(err);
+      });
+    }
+
+
+    regularSharing() {
+      this.socialSharing.share("Mi mensaje que comparto", null, null, null).then(() => {
+        console.log("Se ha compartido correctamente");
+      }).catch((error) => {
+        console.log("Se ha producido un error: " + error);
       });
     }
 

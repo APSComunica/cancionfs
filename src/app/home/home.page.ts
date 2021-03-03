@@ -5,6 +5,8 @@ import { Cancion } from '../cancion';
 //Servicio router
 import { Router } from "@angular/router";
 
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -23,7 +25,7 @@ import { Router } from "@angular/router";
      data: {} as Cancion
     }];
 
-   constructor(private firestoreService: FirestoreService, private router: Router) {
+   constructor(private firestoreService: FirestoreService, private router: Router, private socialSharing: SocialSharing) {
 //     // Crear una cancion vacía
      this.cancionEditando = {} as Cancion;
 //     //obtenemos la lista de canciones
@@ -102,5 +104,14 @@ import { Router } from "@angular/router";
        this.cancionEditando = {} as Cancion;
      })
    }
+
+
+   regularSharing() {
+    this.socialSharing.share("Mi mensaje que comparto", null, null, null).then(() => {
+      console.log("Se ha compartido correctamente");
+    }).catch((error) => {
+      console.log("Se ha producido un error: " + error);
+    });
+  }
 
  }
