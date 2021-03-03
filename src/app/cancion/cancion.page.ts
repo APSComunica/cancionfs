@@ -78,7 +78,8 @@ export class CancionPage implements OnInit {
 
 
   clicBotonBorrar() {
-    //Borramos el bolso
+    this.deleteFile(this.document.data.imagen);
+    //Borramos
     this.firestoreService.borrar("canciones", this.id).then(() => {
       // Limpiar datos de pantalla
       this.document.data = {} as Cancion;
@@ -102,12 +103,13 @@ export class CancionPage implements OnInit {
         {  
           text: 'Okay',  
           handler: () => {  
-            this.firestoreService.borrar("canciones", this.id).then(() => {
-              // Limpiar datos de pantalla
-              this.document.data = {} as Cancion;
-              //Cuando eliminemos el artículo volvemos a home
-              this.router.navigate(["/home"]); 
-            })
+            // this.firestoreService.borrar("canciones", this.id).then(() => {
+            //   // Limpiar datos de pantalla
+            //   this.document.data = {} as Cancion;
+            //   //Cuando eliminemos el artículo volvemos a home
+            //   this.router.navigate(["/home"]); 
+            // })
+            this.clicBotonBorrar();
             console.log('Confirm Okay.');  
           }  
         }  
