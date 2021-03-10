@@ -205,20 +205,35 @@ export class CancionPage implements OnInit {
 
 
     regularShare() {
-      this.socialSharing.share("Mi mensaje que comparto", null, null, null).then(() => {
+      this.socialSharing.share("La canción que me ha gustado es la siguiente: " + "\n" + "Titulo: " + this.document.data.titulo + "\n" + "Autor: " + this.document.data.autor, null, null, null).then(() => {
+        alert("Enviado")
+      }).catch((error) => {
+        console.log("Se ha producido un error: " + error);
       });
     }
 
     whatsappShare(){
-       this.socialSharing.shareViaWhatsApp(null, null);
+       this.socialSharing.shareViaWhatsApp("La canción que me ha gustado es la siguiente: " + "\n" + "Titulo: " + this.document.data.titulo + "\n" + "Autor: " + this.document.data.autor,null, null).then(() => {
+        alert("Enviado")
+      }).catch((error) => {
+        console.log("Se ha producido un error: " + error);
+      });
      }
 
      twitterShare(){
-      this.socialSharing.shareViaTwitter(null, null);
+      this.socialSharing.shareViaTwitter("La canción que me ha gustado es la siguiente: " + "\n" + "Titulo: " + this.document.data.titulo + "\n" + "Autor: " + this.document.data.autor,null, null).then(() => {
+        alert("Enviado")
+      }).catch((error) => {
+        console.log("Se ha producido un error: " + error);
+      });
     }
     
     facebookShare(){
-       this.socialSharing.shareViaFacebook(null, null);
+       this.socialSharing.shareViaFacebook("La canción que me ha gustado es la siguiente: " + "\n" + "Titulo: " + this.document.data.titulo + "\n" + "Autor: " + this.document.data.autor,null, null).then(() => {
+        alert("Enviado")
+      }).catch((error) => {
+        console.log("Se ha producido un error: " + error);
+      });
      }
 
 
